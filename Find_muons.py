@@ -1,4 +1,5 @@
 import awkward as ak
+import os
 
 
 GEN_COL_PDG = 0
@@ -6,9 +7,17 @@ GEN_COL_E   = 8
 
 high_energy_muons = []
 
-for file_id in range(2, 31):
+for file_id in range(1, 200):
+
+    # PATH = f"/afs/cern.ch/work/p/pvanrhee/private/HitPF_datageneration/save/CLD/train/Z_uds_clustering_dataset_validation/05/pf_tree_{file_id}.parquet"
+    PATH = f"/eos/experiment/fcc/users/m/mgarciam/mlpf/CLD/train/Z_uds_CLD_o2_v05_eval_v1/05/pf_tree_10{file_id}.parquet"
+
+
+    if not os.path.exists(PATH):
+        continue
+
+
     print(f"Processing file {file_id}...")
-    PATH = f"/afs/cern.ch/work/p/pvanrhee/private/HitPF_datageneration/save/CLD/train/Z_uds_clustering_dataset_validation/05/pf_tree_{file_id}.parquet"
 
     data = ak.from_parquet(PATH)
     N_events = len(data["X_gen"])

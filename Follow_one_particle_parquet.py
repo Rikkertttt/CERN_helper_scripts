@@ -162,20 +162,40 @@ def save_static_frame(particle_idx, pdg, energy,
     plt.savefig(output_path, bbox_inches='tight')
     plt.close(fig)
 
+def printout(file_id, evt, particle_idx, pdg, energy, hit_x, hit_y, hit_z, hit_t, hit_det, output_dir="Printout"):
+    '''
+    Print out the hit information to a text file
+    '''
+    out = f"{output_dir}/file_{file_id}_event_{evt}_particle_{particle_idx:03d}.txt"
+
+    os.makedirs(os.path.dirname(out), exist_ok=True)
+
+    with open(out, 'w') as f:
+        f.write(f"Particle {particle_idx} (PDG={pdg}, E={energy:.3f} GeV)\n")
+        f.write(f"{len(hit_t)} hits:\n")
+        f.write(f"{'Hit #':<8}{'x [mm]':<12}{'y [mm]':<12}{'z [mm]':<12}{'t [ns]':<12}{'detector ID':<12}\n")
+        for i in range(len(hit_t)):
+            f.write(f"{i:<8}{hit_x[i]:<12.3f}{hit_y[i]:<12.3f}{hit_z[i]:<12.3f}{hit_t[i]:<12.4f}{hit_det[i]:<12}\n")
+
+        print(f"  Printed hit information to {out}")
+
 
 # ── Main ──────────────────────────────────────────────────────────────────────
 def main():
 
-    FILE_ID = 24
+    FILE_ID = 179
     ONLY_MUON = True
+    PRINTOUT = True
 
-    path       = f"/afs/cern.ch/work/p/pvanrhee/private/HitPF_datageneration/save/CLD/train/Z_uds_clustering_dataset_validation/05/pf_tree_{FILE_ID}.parquet"
+    # path       = f"/afs/cern.ch/work/p/pvanrhee/private/HitPF_datageneration/save/CLD/train/Z_uds_clustering_dataset_validation/05/pf_tree_{FILE_ID}.parquet"
+    path = f"/eos/experiment/fcc/users/m/mgarciam/mlpf/CLD/train/Z_uds_CLD_o2_v05_eval_v1/05/pf_tree_10{FILE_ID}.parquet"
     output_dir = "Parquet_particle_plots"
+    printout_dir = "Printout"
 
     os.makedirs(output_dir, exist_ok=True)
 
 
-    for evt in [32]:
+    for evt in [4, 31]:
 
         print(f"\nProcessing event {evt}...")
 
@@ -239,6 +259,10 @@ def main():
                                  hit_x, hit_y, hit_z, hit_t, hit_det, out)
 
             print(f"saved {out}")
+
+            if PRINTOUT:
+                printout(FILE_ID, evt, particle_idx, pdg, energy,
+                         hit_x, hit_y, hit_z, hit_t, hit_det, output_dir=os.path.join(output_dir, printout_dir))
 
     print(f"\nDone. All files saved in '{output_dir}/'")
 
