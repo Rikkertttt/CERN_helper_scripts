@@ -7,10 +7,11 @@ GEN_COL_E   = 8
 
 high_energy_muons = []
 
-for file_id in range(1, 200):
+for file_id in range(2,4):
 
     # PATH = f"/afs/cern.ch/work/p/pvanrhee/private/HitPF_datageneration/save/CLD/train/Z_uds_clustering_dataset_validation/05/pf_tree_{file_id}.parquet"
-    PATH = f"/eos/experiment/fcc/users/m/mgarciam/mlpf/CLD/train/Z_uds_CLD_o2_v05_eval_v1/05/pf_tree_10{file_id}.parquet"
+    # PATH = f"/eos/experiment/fcc/users/m/mgarciam/mlpf/CLD/train/Z_uds_CLD_o2_v05_eval_v1/05/pf_tree_10{file_id}.parquet"
+    PATH = f"/afs/cern.ch/work/p/pvanrhee/private/HitPF_datageneration/save/CLD/train/Z_uds_clustering_dataset_muontimetest/05/pf_tree_{file_id}.parquet"
 
 
     if not os.path.exists(PATH):

@@ -188,14 +188,15 @@ def main():
     PRINTOUT = True
 
     # path       = f"/afs/cern.ch/work/p/pvanrhee/private/HitPF_datageneration/save/CLD/train/Z_uds_clustering_dataset_validation/05/pf_tree_{FILE_ID}.parquet"
-    path = f"/eos/experiment/fcc/users/m/mgarciam/mlpf/CLD/train/Z_uds_CLD_o2_v05_eval_v1/05/pf_tree_10{FILE_ID}.parquet"
+    # path = f"/eos/experiment/fcc/users/m/mgarciam/mlpf/CLD/train/Z_uds_CLD_o2_v05_eval_v1/05/pf_tree_10{FILE_ID}.parquet"
+    path = f"/afs/cern.ch/work/p/pvanrhee/private/HitPF_datageneration/save/CLD/train/Z_uds_clustering_dataset_muontimetest/05/pf_tree_2.parquet"
     output_dir = "Parquet_particle_plots"
     printout_dir = "Printout"
 
     os.makedirs(output_dir, exist_ok=True)
 
 
-    for evt in [4, 31]:
+    for evt in [16]:
 
         print(f"\nProcessing event {evt}...")
 
